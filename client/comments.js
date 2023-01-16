@@ -4,7 +4,7 @@ const photo_id = String(url).split("?")[1];
 
 
 const divPictures = document.getElementById("picture");
-const requestUrlUnsplash = `https://api.unsplash.com/photos/${photo_id}?client_id=JicVlnf0ouBslobOUQ_fcYmb0U3F_T7VShvW6mRvOlM`
+const requestUrlUnsplash = `https://api.unsplash.com/photos/${photo_id}?client_id=`
 console.log(divPictures);
 
 makeRequestToUnsplash(requestUrlUnsplash);
