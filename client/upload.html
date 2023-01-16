@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="Image gallery, SnP internship">
+        <meta name="author" content="Silentiy">
+        <link rel="icon" href="../images/favicon.ico">
+        <title>Gallery</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+        <!-- Custom styles -->
+        <link rel="stylesheet" href="style.css">
+
+        <!-- scripts -->
+        <script src="w3_include.js"> </script>
+
+    </head>
+
+    <body class="d-flex flex-column min-vh-100 bg-light"> 
+
+        <!-- <div w3-include-html="header.html"></div> -->
+
+        <header class="p-3 text-bg-dark">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center">
+                    <!-- LOGGED OUT -->
+                    <!-- <div class = "ms-lg-3 order-2 order-lg-first">
+                        <button type="button" class="btn btn-outline-light me-2">Sign-up</button>
+                        <button type="button" class="btn btn-outline-light me-2">Login</button>
+                    </div> -->
+        
+                    <!-- LOGGED IN -->
+                    <div class = "d-flex flex-wrap align-items-center justify-content-center order-2 order-lg-first">
+                        <div class = "ms-lg-3 me-2">
+                            <div class="text-wrap"> Welcome,  </div>
+                            <div class="text-wrap"> UserName! </div>
+                        </div>
+        
+                        <img class="avatar d-inline me-2 mb-2 mb-lg-0" src="../images/avatar.jpg" alt="user avatar">
+                        
+                        <div class = "me-2">
+                            <button type="button" class="btn btn-outline-light">LogOut</button>
+                            <a href="profile.html"> <button type="button" class="btn btn-warning">Account</button> </a>
+                        </div>
+                    </div>
+                    
+                    <!-- PERMANENT PART -->
+                    <a href="main.html" class="navbar-brand d-flex align-items-center mx-auto mb-2 mb-lg-0 order-1 order-sm-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" 
+                            stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24">
+                            <path d="M23 19 a2 2 0 0 1-2 2 H3 a2 2 0 0 1-2-2 V8 a2 2 0 0 1 2-2 h4 l2-3 h6 l2 3 h4 a2 2 0 0 1 2 2 z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        <strong class="fst-italic fs-2 text-capitalize">MyGallery</strong>
+                    </a>
+            
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 mt-3 mt-lg-0 me-lg-3 order-last" role="search">
+                        <input type="search" class="form-control form-control-dark" placeholder="Search.." aria-label="Search">
+                    </form>
+        
+                </div>
+            </div>
+        </header>
+
+        <main>
+            
+            <!-- GREETING -->
+            <section class="text-center py-1 bg-white">
+                <div>Account of UserName</div>
+            </section>
+          
+            <!-- CONTENT -->
+            <div class="album pt-4 pb-3 bg-light mx-2">
+                
+                <div class="profile-card container justify-content-center">
+                    
+                    <nav class="nav nav-tabs">
+                        <a href="profile.html" class="nav-item nav-link link-dark">Profile</a>
+                        <a href="upload.html" class="nav-item nav-link link-dark active">Add photo...</a>
+                        <a href="photos.html" class="nav-item nav-link link-dark">My photos...</a>
+                    </nav>
+                    
+                    <div class="container custom-semicard bg-white mb-4"> 
+                        <div class="row"> 
+
+                            <div class="col-12">
+                                <form>
+                                    <div class="mb-2 mt-2">
+                                        <label for="input_file" class="form-label mb-0 fw-semibold">Upload a file</label>
+                                        <input class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" id="input_file">
+                                        <div id="file_help" class="form-text">Allowed formats are: *.jpg, *.png</div>
+                                    </div>
+
+                                    <div class="mb-2 text-center">
+                                        <!-- <div class="form-label mb-0 fw-semibold">Preview</div> -->
+                                        <img class="photo-view img-fluid" src="../images/preview.jpg" id="image_preview" alt="description">
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label for="photo_name" class="form-label mb-0 fw-semibold">Photo name</label>
+                                        <input type="text" class="form-control" id="photo_name">
+                                    </div>
+
+                                    <div class="mb-0">
+                                        <label for="photo_description" class="form-label mb-0 fw-semibold">Description</label>
+                                        <textarea class="form-control" id="photo_description" rows="3"></textarea>
+                                    </div>
+
+                                    <div class="text-end mt-1 mb-3">
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm mt-1 text-end">submit</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      
+        </main>
+        
+        <footer class="footer mt-auto pb-3 text-bg-dark">
+            <section class="pb-4 pt-2 bg-white"> </section>
+
+            <div class="container pt-3">
+                <p class="mb-1 text-center">&copy; Salt&Pepper Internship</p>
+                <p class="mb-0 text-center"> Silentiy, 2023  </p>
+            </div>
+        </footer>
+      
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <!-- <script>  includeHTML(); </script>  -->
+        
+        <script>
+            //  https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded -->
+            const image_preview = document.getElementById("image_preview")
+            const input_file = document.getElementById("input_file")
+            
+            input_file.onchange = evt => {
+                const [file] = input_file.files
+                if (file) {
+                    image_preview.src = URL.createObjectURL(file)
+                }
+            }
+        </script>
+
+    </body>
+
+</html>

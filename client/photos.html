@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="Image gallery, SnP internship">
+        <meta name="author" content="Silentiy">
+        <link rel="icon" href="../images/favicon.ico">
+        <title>Gallery</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+        <!-- Custom styles -->
+        <link rel="stylesheet" href="style.css">
+
+        <!-- scripts -->
+        <script src="w3_include.js"> </script>
+
+    </head>
+
+    <body class="d-flex flex-column min-vh-100 bg-light"> 
+
+        <!-- <div w3-include-html="header.html"></div> -->
+
+        <header class="p-3 text-bg-dark">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center">
+                    <!-- LOGGED OUT -->
+                    <!-- <div class = "ms-lg-3 order-2 order-lg-first">
+                        <button type="button" class="btn btn-outline-light me-2">Sign-up</button>
+                        <button type="button" class="btn btn-outline-light me-2">Login</button>
+                    </div> -->
+        
+                    <!-- LOGGED IN -->
+                    <div class = "d-flex flex-wrap align-items-center justify-content-center order-2 order-lg-first">
+                        <div class = "ms-lg-3 me-2">
+                            <div class="text-wrap"> Welcome,  </div>
+                            <div class="text-wrap"> UserName! </div>
+                        </div>
+        
+                        <img class="avatar d-inline me-2 mb-2 mb-lg-0" src="../images/avatar.jpg" alt="user avatar">
+                        
+                        <div class = "me-2">
+                            <button type="button" class="btn btn-outline-light">LogOut</button>
+                            <a href="profile.html"> <button type="button" class="btn btn-warning">Account</button> </a>
+                        </div>
+                    </div>
+                    
+                    <!-- PERMANENT PART -->
+                    <a href="main.html" class="navbar-brand d-flex align-items-center mx-auto mb-2 mb-lg-0 order-1 order-sm-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" 
+                            stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24">
+                            <path d="M23 19 a2 2 0 0 1-2 2 H3 a2 2 0 0 1-2-2 V8 a2 2 0 0 1 2-2 h4 l2-3 h6 l2 3 h4 a2 2 0 0 1 2 2 z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        <strong class="fst-italic fs-2 text-capitalize">MyGallery</strong>
+                    </a>
+            
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 mt-3 mt-lg-0 me-lg-3 order-last" role="search">
+                        <input type="search" class="form-control form-control-dark" placeholder="Search.." aria-label="Search">
+                    </form>
+        
+                </div>
+            </div>
+        </header>
+
+        <main>
+            
+            <!-- GREETING -->
+            <section class="text-center py-1 bg-white">
+                <div>Account of UserName</div>
+            </section>
+          
+            <!-- CONTENT -->
+            <div class="album pt-4 pb-3 bg-light mx-2">
+                
+                <div class="profile-card container justify-content-center">
+                    
+                    <nav class="nav nav-tabs">
+                        <a href="profile.html" class="nav-item nav-link link-dark">Profile</a>
+                        <a href="upload.html" class="nav-item nav-link link-dark">Add photo...</a>
+                        <a href="photos.html" class="nav-item nav-link link-dark active">My photos...</a>
+                    </nav>
+                    
+                    <section class="text-center custom-semicard container py-1 mb-4 bg-white">
+                        <div class="d-inline me-2">Show photos: </div>
+                        <button type="button" class="btn btn-outline-secondary btn-sm my-2">on deletion</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm my-2">on moderation</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm my-2">published</button>
+                    </section>
+
+                    <!-- pic 1 -->
+                    <div class="container card bg-white mb-3"> 
+                        <div class="row pb-3">
+
+                            <div class="col-12 col-sm-6 px-sm-3">
+                                <div class="profile-photos text-center mx-auto my-auto">
+                                    <div class="mt-2 fw-semibold"> Photo name </div>
+                                    <img class="photo-view-small img-fluid" src="../images/Battersea_Power_Station_1.jpg" alt="description">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 px-sm-3 mt-3">
+                                <div class="mb-2 mt-2">
+                                    <div class="mb-0 fw-semibold">Added on:</div>
+                                    <div class="container bg-light"> 11.11.2022 </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <div class="mb-0 fw-semibold">Status</div>
+                                    <div class="container bg-light"> published </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <div class="mb-0 fw-semibold">Statistics</div>
+                                    <div class="container bg-light"> 5 upvotes, 11 comments </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm mt-1">change</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm mt-1">delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- pic 2 -->
+                    <div class="container card bg-white mb-3"> 
+                        <div class="row pb-3">
+
+                            <div class="col-12 col-sm-6 px-sm-3">
+                                <div class="profile-photos text-center mx-auto my-auto">
+                                    <div class="mt-2 fw-semibold"> Photo name </div>
+                                    <img class="photo-view-small img-fluid" src="../images/Autostadt_Silos_Germany.jpg" alt="description">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 px-sm-3 mt-3">
+                                <div class="mb-2 mt-2">
+                                    <div class="mb-0 fw-semibold">Added on:</div>
+                                    <div class="container bg-light"> 11.11.2022 </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <div class="mb-0 fw-semibold">Status</div>
+                                    <div class="container bg-light"> published </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <div class="mb-0 fw-semibold">Statistics</div>
+                                    <div class="container bg-light"> 5 upvotes, 11 comments </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm mt-1">change</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm mt-1">delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        
+        </main>
+        
+        <footer class="footer mt-auto pb-3 text-bg-dark">
+            <section class="pb-4 pt-2 bg-white"> </section>
+
+            <div class="container pt-3">
+                <p class="mb-1 text-center">&copy; Salt&Pepper Internship</p>
+                <p class="mb-0 text-center"> Silentiy, 2023  </p>
+            </div>
+        </footer>
+      
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <!-- <script>  includeHTML(); </script>  -->
+    
+    </body>
+
+</html>
