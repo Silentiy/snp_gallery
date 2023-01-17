@@ -6,7 +6,7 @@ createPageContent();
 
 async function createPageContent() {
   const apiResponse = await makeRequestToUnsplash();
-  divContent.appendChild(createPictureCard(apiResponse));
+  divContent.prepend(createPictureCard(apiResponse));
   // divContent.appendChild(createLeaveCommentCard(apiResponse));
   // divContent.appendChild(createCommentsCards(apiResponse));
 }
