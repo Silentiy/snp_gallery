@@ -1,34 +1,21 @@
+import { makeRequestToUnsplash, requestAccessKey, createCardVotesAndButtons } from "./common.js";
+
 const divPictures = document.getElementById("pictures");
 
-makeRequestToUnsplash();
+createPageContent();
 
-async function requestAccessKey() {
-  try {
-    const response = await fetch("http://localhost:8080");
-    const jsonData = await response.json();
-    return await jsonData.access_key;
-  } catch (error) {
-    console.error("The attempt to get API key is rejected!", error);
-    return error;
-  }
-}
-
-async function makeRequestToUnsplash() {
+async function createPageContent() {
   const ACCESS_KEY = await requestAccessKey();
-  const requestUrl = `https://api.unsplash.com/search/photos?page=1&query=buildings&client_id=${ACCESS_KEY}`;
-  try {
-    const response = await fetch(requestUrl);
-    const jsonData = await response.json();
-    jsonData.results.forEach((imageObj) => {
-      createCard(imageObj);
-    });
-  } catch (error) {
-    console.error("The request to Unsplash is rejected!", error);
-  }
+  const url = `https://api.unsplash.com/search/photos?page=1&query=buildings&client_id=${ACCESS_KEY}`;
+
+  const jsonData = await makeRequestToUnsplash(url);
+  jsonData.results.forEach((imageObj) => {
+    createCard(imageObj);
+  });
 }
 
 function detailedPageLink(imageObj) {
-  return `comments.html?id=${imageObj.id}`;
+  return `comments.html?id=${imageObj.id}`; 
 }
 
 function createCard(imageObj) {
@@ -42,7 +29,7 @@ function createCard(imageObj) {
   cardTopPart.classList.add("d-flex");
   cardTopPart.appendChild(fiction);
   cardTopPart.appendChild(createCardPicture(imageObj));
-  cardTopPart.appendChild(createCardVoteButtons(imageObj));
+  cardTopPart.appendChild(createCardVotesAndButtons(imageObj));
   // card bottom part div
   const cardBottomPart = createCardBottomPart(imageObj);
   // append content into cardDiv
@@ -96,35 +83,6 @@ function createCardPicture(imageObj) {
   overlayParent.appendChild(pictureLink);
 
   return overlayParent;
-}
-
-function createCardVoteButtons(imageObj) {
-  const votesButtonsDiv = document.createElement("div");
-  votesButtonsDiv.classList.add("my-auto", "mx-3", "buttons-votes", "text-center");
-
-  const plusSign = document.createTextNode("+");
-  const minusSign = document.createTextNode("-");
-  const votesNumber = document.createTextNode(imageObj.likes);
-
-  for (let i = 0; i < 2; i += 1) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.classList.add("btn", "btn-sm", "btn-outline-secondary", "vote-btn");
-    if (i === 0) {
-      button.appendChild(plusSign);
-    } else {
-      button.appendChild(minusSign);
-    }
-    votesButtonsDiv.appendChild(button);
-  }
-
-  const votesDiv = document.createElement("div");
-  votesDiv.classList.add("votes", "d-block", "pt-2", "pb-2", "text-center");
-  votesDiv.appendChild(votesNumber);
-  const secondButton = votesButtonsDiv.lastChild;
-  votesButtonsDiv.insertBefore(votesDiv, secondButton);
-
-  return votesButtonsDiv;
 }
 
 function createCardBottomPart(imageObj) {
