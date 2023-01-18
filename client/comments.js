@@ -28,7 +28,7 @@ async function makeRequestToUnsplash() {
 
 async function requestAccessKey() {
   try {
-    const response = await fetch("http://localhost:9000");
+    const response = await fetch("http://localhost:8080");
     const jsonData = await response.json();
     return await jsonData.access_key;
   } catch (error) {
