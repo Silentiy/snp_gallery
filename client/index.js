@@ -111,3 +111,25 @@ function createCardBottomPart(imageObj) {
 
   return bottomDiv;
 }
+
+function addPaginationButtonsToFooter() {
+  const paginationSection = document.getElementById("pagination");
+  paginationSection.classList.remove("pb-4", "pt-2", "bg-white");
+  paginationSection.classList.add("text-center", "py-1", "bg-white");
+
+  const backButton = document.createElement("button");
+  backButton.type = "button";
+  backButton.classList.add("btn", "btn-outline-secondary", "btn-sm", "my-2");
+  const backButtonText = document.createTextNode("&larr; back");
+  backButton.appendChild(backButtonText);
+
+  const forwardButton = document.createElement("button");
+  forwardButton.type = "button";
+  forwardButton.classList.add("btn", "btn-outline-secondary", "btn-sm", "my-2");
+  const forwardButtonText = document.createTextNode("forward \u2192 ");
+  forwardButton.appendChild(forwardButtonText);
+
+  paginationSection.appendChild(backButton);
+  paginationSection.appendChild(forwardButton);
+}
+

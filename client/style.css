@@ -73,6 +73,10 @@
     min-width: 36px;
 }
 
+.pagination-main{
+    margin-bottom: -48px;
+    z-index: 1000;
+}
 
 
 /* OVERLAY */

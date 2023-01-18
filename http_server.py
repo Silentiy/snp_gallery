@@ -15,15 +15,14 @@ def read_key():
 
 class CorsServer(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
 
+        self.send_response(200)
         self.send_header("Content-Type",  "application/json; charset=utf-8")
-        self.send_header("Access-Control-Allow-Origin", "http://localhost:8000")
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET")
         self.end_headers()
 
         response = json.dumps({'access_key': read_key()})
-
         self.wfile.write(bytes(response, "utf-8"))
 
 
