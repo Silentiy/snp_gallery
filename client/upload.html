@@ -97,9 +97,8 @@
                                         <div id="file_help" class="form-text">Allowed formats are: *.jpg, *.png</div>
                                     </div>
 
-                                    <div class="mb-2 text-center">
-                                        <!-- <div class="form-label mb-0 fw-semibold">Preview</div> -->
-                                        <img class="photo-view img-fluid" src="../images/preview.jpg" id="image_preview" alt="description">
+                                    <div class="mb-2 text-center" id="image_preview_area">
+                                        <p class="text-center text-muted" id="image_preview_old"> Image preview... </p> 
                                     </div>
 
                                     <div class="mb-2">
@@ -141,13 +140,20 @@
         
         <script>
             //  https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded -->
-            const image_preview = document.getElementById("image_preview")
-            const input_file = document.getElementById("input_file")
+            const image_preview_area = document.getElementById("image_preview_area");
+            const input_file = document.getElementById("input_file");
             
             input_file.onchange = evt => {
                 const [file] = input_file.files
                 if (file) {
-                    image_preview.src = URL.createObjectURL(file)
+                    const image_preview_old = document.getElementById("image_preview_old");
+                    image_preview_old.remove();
+                    const image_preview = document.createElement("img");
+                    image_preview.src = URL.createObjectURL(file);
+                    image_preview.alt = "Image preview";
+                    image_preview.id = "image_preview_old";
+                    image_preview.classList.add("photo-view", "img-fluid");
+                    image_preview_area.appendChild(image_preview);
                 }
             }
         </script>
