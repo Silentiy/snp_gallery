@@ -15,7 +15,7 @@ async function createPageContent() {
 }
 
 function detailedPageLink(imageObj) {
-  return `comments.html?id=${imageObj.id}`; 
+  return `comments.html?id=${imageObj.id}`;
 }
 
 function createCard(imageObj) {

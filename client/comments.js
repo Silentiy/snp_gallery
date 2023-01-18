@@ -45,10 +45,10 @@ function createPictureCard(imageObj) {
   image.classList.add("card-img-top", "img-fluid", "ps-3");
   imageDiv.appendChild(image);
   // buttons
-  const buttons = createCardVotesAndButtons(imageObj)
+  const buttons = createCardVotesAndButtons(imageObj);
   // construct picture and buttons div
   divPictureAndButtons.appendChild(imageDiv);
-  divPictureAndButtons.appendChild(buttons); 
+  divPictureAndButtons.appendChild(buttons);
   // card body
   const cardBodyDiv = document.createElement("div");
   cardBodyDiv.classList.add("card-body", "pt-1", "pb-2");
