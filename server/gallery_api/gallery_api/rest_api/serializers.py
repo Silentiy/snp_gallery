@@ -9,8 +9,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'username', 'email', 'groups']
 
 
-class PhotoSerializer(serializers.HyperlinkedModelSerializer):
+class PhotoListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
-        fields = ['photo_name', 'photo_description']
+        fields = "__all__"
+        read_only_fields = ["user"]
+
+    user = serializers.ReadOnlyField(source='user.username')
 

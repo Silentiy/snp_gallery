@@ -17,13 +17,16 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 from .rest_api import views
-
+from django.conf import settings
+from django.conf.urls.static import static
+from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'photos', views.PhotoViewSet)
+# router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-]
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('photos/', views.PhotoListView.as_view()),
+    path('api-token-auth/', obtain_auth_token)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
