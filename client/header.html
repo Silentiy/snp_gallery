@@ -2,27 +2,28 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center">
             <!-- LOGGED OUT -->
-            <div class = "ms-lg-3 order-2 order-lg-first">
+            <div class = "ms-lg-3 order-2 order-lg-first" id="logged-out-div">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">SignUp</button>
-                <button type="button" class="btn btn-outline-light me-2">LogIn</button>
+                <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">LogIn</button>
             </div>
 
             <!-- LOGGED IN -->
-            <!-- <div class = "d-flex flex-wrap align-items-center justify-content-center order-2 order-lg-first">
+            <div class="d-flex flex-wrap align-items-center justify-content-center order-2 order-lg-first header-hidden" id="logged-in-div">
                 <div class = "ms-lg-3 me-2">
-                    <div class="text-wrap"> Welcome,  </div>
-                    <div class="text-wrap"> UserName! </div>
+                    <div class="text-wrap text-center"> Welcome,  </div>
+                    <div class="text-wrap text-center" id="username">  </div>
                 </div>
 
-                <img class="avatar d-inline me-2 mb-2 mb-lg-0" src="https://api.dicebear.com/5.x/open-peeps/svg?face=smile,calm,explaining" alt="user avatar">
-                
+                <div>
+                    <img class="avatar d-inline me-2 mb-2 mb-lg-0" id="user-avatar" src="https://api.dicebear.com/5.x/open-peeps/svg?face=smile,calm,explaining" alt="user avatar">
+                </div>
+
                 <div class = "me-2">
-                    <button type="button" class="btn btn-outline-light">LogOut</button>
+                    <button type="button" class="btn btn-outline-light" id="logout-btn">LogOut</button>
                     <a href="profile.html"> <button type="button" class="btn btn-warning">Account</button> </a>
                 </div>
-            </div> -->
-            
+            </div>
+
             <!-- PERMANENT PART -->
             <a href="index.html" class="navbar-brand d-flex align-items-center mx-auto mb-2 mb-lg-0 order-1 order-sm-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" 

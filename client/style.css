@@ -73,11 +73,10 @@
     min-width: 36px;
 }
 
-.pagination-main{
-    margin-bottom: -28px;
-    z-index: 1000;
+.header-hidden,
+.header-hidden * {
+    display: none;
 }
-
 
 /* OVERLAY */
 /* parent container */

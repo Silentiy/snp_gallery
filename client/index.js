@@ -1,15 +1,16 @@
-import { makeRequestToApi, requestAccessKey, createCardVotesAndButtons } from "./common.js";
+import { makeRequestToApi, createCardVotesAndButtons } from "./common.js";
 
 const divPictures = document.getElementById("pictures");
 
 createPageContent();
 
 async function createPageContent() {
-  const ACCESS_KEY = await requestAccessKey();
-  const url = `https://api.unsplash.com/search/photos?page=1&query=buildings&client_id=${ACCESS_KEY}`;
+  const url = "http://127.0.0.1:8000/photos/";
 
   const jsonData = await makeRequestToApi(url);
-  jsonData.results.forEach((imageObj) => {
+  console.log(jsonData);
+
+  jsonData.forEach((imageObj) => {
     createCard(imageObj);
   });
 }
@@ -68,12 +69,12 @@ function createCardPicture(imageObj) {
   // picture
   const image = document.createElement("img");
   image.classList.add("card-img-top", "img-main");
-  image.src = imageObj.urls.regular;
-  image.alt = imageObj.alt_description;
+  image.src = imageObj.file;
+  image.alt = imageObj.description;
   // overlay child (picture description)
   const overlayChild = document.createElement("div");
   overlayChild.classList.add("overlay-text", "overflow-hidden", "text-center", "ps-3", "pe-3");
-  const overlayText = document.createTextNode("Short informative description. Possibly, short informative description that takes a lot of space.");
+  const overlayText = document.createTextNode(imageObj.description);
   overlayChild.appendChild(overlayText);
 
   pictureLink.appendChild(overlayBackgroud);
@@ -91,8 +92,8 @@ function createCardBottomPart(imageObj) {
   // author and date content
   const authorDateContainer = document.createElement("small");
   authorDateContainer.classList.add("card-text", "text-muted");
-  const addedDate = imageObj.created_at.split("T")[0];
-  const authorDate = document.createTextNode(`Author: ${imageObj.user.username}, added: ${addedDate}`);
+  const addedDate = imageObj.upload_date.split("T")[0];
+  const authorDate = document.createTextNode(`Author: ${imageObj.user}, added: ${addedDate}`);
   authorDateContainer.appendChild(authorDate);
   // comments
   const commentsDiv = document.createElement("div");
@@ -120,7 +121,7 @@ export default function addPaginationButtonsToFooter() {
   const backButton = document.createElement("button");
   backButton.type = "button";
   backButton.classList.add("btn", "btn-outline-secondary", "btn-sm", "my-2");
-  const backButtonText = document.createTextNode("&larr; back");
+  const backButtonText = document.createTextNode("\u2190 back");
   backButton.appendChild(backButtonText);
 
   const forwardButton = document.createElement("button");

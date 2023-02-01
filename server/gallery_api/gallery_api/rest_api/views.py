@@ -50,6 +50,14 @@ class PhotoListView(views.APIView):
 
 
 class LoginVK(views.APIView):
+    authentication_classes = [TokenAuthentication]
+
+    def get_permissions(self, *args, **kwargs):
+        if self.request.method in ["DELETE", "GET"]:
+            return [permissions.IsAuthenticated()]
+        else:
+            return []
+
     @staticmethod
     def request_access_token(code):
         access_key_url = f"https://oauth.vk.com/access_token?client_id=51536587" \
@@ -137,9 +145,9 @@ class LoginVK(views.APIView):
         gallery_user_update["social_avatar_url"] = user_data["user_avatar_url"]
 
         user_update = dict()
-        user_update["email"] = user_data["user_email"],
-        user_update["first_name"] = user_data["user_first_name"],
-        user_update["last_name"] = user_data["user_last_name"],
+        user_update["email"] = user_data["user_email"]
+        user_update["first_name"] = user_data["user_first_name"]
+        user_update["last_name"] = user_data["user_last_name"]
         user_update["username"] = user_data["user_short_name"]
 
         gallery_user_object = self.get_gallery_user(user_data)
@@ -153,10 +161,10 @@ class LoginVK(views.APIView):
         try:
             old_token = Token.objects.get(user_id=user_id)
             old_token.delete()
-            token = Token.objects.create(user=user)
         except ObjectDoesNotExist:
-            token = Token.objects.create(user=user)
-        return token
+            pass
+
+        return Token.objects.create(user=user)
 
     @staticmethod
     def prepare_user_data_response(user):
@@ -200,3 +208,24 @@ class LoginVK(views.APIView):
             return JsonResponse(data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         data = {"error": "'code: string' and 'network: string' are obligatory in this request"}
         return JsonResponse(data, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        request_token = request.headers["Authorization"].split()[1]
+        print(request_token)
+        user = request.user
+        user_id = user.pk
+        try:
+            token = Token.objects.get(user_id=user_id)
+            print(str(token))
+            if request_token == str(token):
+                token.delete()
+                return Response({"success": "token deleted"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "incorrect token"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": f"token not found, {e}"}, status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request):
+        user = request.user
+        user_response = self.prepare_user_data_response(user)
+        return JsonResponse(user_response, status=status.HTTP_200_OK)
