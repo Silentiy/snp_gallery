@@ -1,4 +1,4 @@
-import { makeRequestToUnsplash, requestAccessKey, createCardVotesAndButtons } from "./common.js";
+import { makeRequestToApi, requestAccessKey, createCardVotesAndButtons } from "./common.js";
 
 const divContent = document.getElementById("content");
 // const divLeaveComment = document.getElementById("leave-a-comment");
@@ -12,7 +12,7 @@ async function createPageContent() {
   const photoId = String(currentUrl).split("=")[1];
   const url = `https://api.unsplash.com/photos/${photoId}?client_id=${ACCESS_KEY}`;
 
-  const jsonData = await makeRequestToUnsplash(url);
+  const jsonData = await makeRequestToApi(url);
   divContent.prepend(createPictureCard(jsonData));
   // divContent.appendChild(createLeaveCommentCard(apiResponse));
   // divContent.appendChild(createCommentsCards(apiResponse));

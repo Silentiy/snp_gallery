@@ -5,10 +5,10 @@ import json
 
 
 hostName = "localhost"
-serverPort = 8080
+serverPort = 8090
 
 def read_key():
-    with open("key.env") as env:
+    with open(".env") as env:
         lines = env.readlines()
         return lines[0].split("=")[1]
 

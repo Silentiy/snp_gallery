@@ -1,4 +1,4 @@
-export async function makeRequestToUnsplash(requestUrl) {
+export async function makeRequestToApi(requestUrl) {
   try {
     const response = await fetch(requestUrl);
     const jsonData = await response.json();
@@ -11,7 +11,7 @@ export async function makeRequestToUnsplash(requestUrl) {
 
 export async function requestAccessKey() {
   try {
-    const response = await fetch("http://localhost:8080");
+    const response = await fetch("http://localhost:8090");
     const jsonData = await response.json();
     return await jsonData.access_key;
   } catch (error) {

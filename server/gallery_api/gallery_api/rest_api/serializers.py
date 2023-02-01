@@ -17,3 +17,8 @@ class PhotoListSerializer(serializers.ModelSerializer):
 
     user = serializers.ReadOnlyField(source='user.username')
 
+
+class LoginVKSerializer(serializers.Serializer):
+    code = serializers.CharField()
+    network = serializers.CharField()
+

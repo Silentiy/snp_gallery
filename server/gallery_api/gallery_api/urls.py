@@ -28,5 +28,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('photos/', views.PhotoListView.as_view()),
+    path("code/", views.LoginVK.as_view()),
     path('api-token-auth/', obtain_auth_token)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,13 +2,14 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center">
             <!-- LOGGED OUT -->
-            <!-- <div class = "ms-lg-3 order-2 order-lg-first">
-                <button type="button" class="btn btn-outline-light me-2">Sign-up</button>
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-            </div> -->
+            <div class = "ms-lg-3 order-2 order-lg-first">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">SignUp</button>
+                <button type="button" class="btn btn-outline-light me-2">LogIn</button>
+            </div>
 
             <!-- LOGGED IN -->
-            <div class = "d-flex flex-wrap align-items-center justify-content-center order-2 order-lg-first">
+            <!-- <div class = "d-flex flex-wrap align-items-center justify-content-center order-2 order-lg-first">
                 <div class = "ms-lg-3 me-2">
                     <div class="text-wrap"> Welcome,  </div>
                     <div class="text-wrap"> UserName! </div>
@@ -20,7 +21,7 @@
                     <button type="button" class="btn btn-outline-light">LogOut</button>
                     <a href="profile.html"> <button type="button" class="btn btn-warning">Account</button> </a>
                 </div>
-            </div>
+            </div> -->
             
             <!-- PERMANENT PART -->
             <a href="index.html" class="navbar-brand d-flex align-items-center mx-auto mb-2 mb-lg-0 order-1 order-sm-2">
@@ -33,9 +34,31 @@
             </a>
     
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 mt-3 mt-lg-0 me-lg-3 order-last" role="search">
-                <input type="search" class="form-control form-control-dark" placeholder="Search.." aria-label="Search">
+                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
             </form>
 
         </div>
     </div>
 </header>
+  
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">SignUp or LogIn with your social account!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="btn" id="vk-btn">VK LogIn</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+  

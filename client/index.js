@@ -1,4 +1,4 @@
-import { makeRequestToUnsplash, requestAccessKey, createCardVotesAndButtons } from "./common.js";
+import { makeRequestToApi, requestAccessKey, createCardVotesAndButtons } from "./common.js";
 
 const divPictures = document.getElementById("pictures");
 
@@ -8,7 +8,7 @@ async function createPageContent() {
   const ACCESS_KEY = await requestAccessKey();
   const url = `https://api.unsplash.com/search/photos?page=1&query=buildings&client_id=${ACCESS_KEY}`;
 
-  const jsonData = await makeRequestToUnsplash(url);
+  const jsonData = await makeRequestToApi(url);
   jsonData.results.forEach((imageObj) => {
     createCard(imageObj);
   });
@@ -112,9 +112,9 @@ function createCardBottomPart(imageObj) {
   return bottomDiv;
 }
 
-function addPaginationButtonsToFooter() {
+export default function addPaginationButtonsToFooter() {
   const paginationSection = document.getElementById("pagination");
-  paginationSection.classList.remove("pb-4", "pt-2", "bg-white");
+  paginationSection.className = "";
   paginationSection.classList.add("text-center", "py-1", "bg-white");
 
   const backButton = document.createElement("button");
@@ -132,4 +132,3 @@ function addPaginationButtonsToFooter() {
   paginationSection.appendChild(backButton);
   paginationSection.appendChild(forwardButton);
 }
-

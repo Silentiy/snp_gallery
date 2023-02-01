@@ -9,6 +9,7 @@ python-decouple = "*"
 djangorestframework = "~=3.12"
 django = ">=2.2"
 pillow = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
