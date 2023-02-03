@@ -107,21 +107,23 @@ class LoginVK(views.APIView):
         return user_data
 
     def is_existing_user(self, user_data):
-        try:
-            self.get_user(user_data)
-            return True
-        except ObjectDoesNotExist:
-            return False
+        return True if self.get_user(user_data) is not None else False
 
     @staticmethod
     def get_gallery_user(user_data):
-        return GalleryUser.objects.filter(social_login_provider=user_data["social_network"],
-                                          social_user_id=user_data["user_social_id"])[0]
+        try:
+            gallery_user = GalleryUser.objects.filter(social_login_provider=user_data["social_network"],
+                                                      social_user_id=user_data["user_social_id"])[0]
+        except:
+            gallery_user = None
+        return gallery_user
 
     def get_user(self, user_data):
         gallery_user = self.get_gallery_user(user_data)
-        user_id = gallery_user.user_id
-        return User.objects.get(pk=user_id)
+        if gallery_user:
+            user_id = gallery_user.user_id
+            return User.objects.get(pk=user_id)
+        return None
 
     @staticmethod
     def create_user(user_data):
