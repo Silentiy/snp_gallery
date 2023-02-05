@@ -1,17 +1,22 @@
 from django.contrib.auth.models import User
-from .models import Photo, GalleryUser
-from . import serializers
-from rest_framework import views
+from rest_framework import views, generics
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, BasicAuthentication
 from django.core.exceptions import ObjectDoesNotExist
 import requests
 from decouple import config
 from django.http import JsonResponse
 from rest_framework.authtoken.models import Token
+from rest_framework.parsers import FormParser, MultiPartParser
+
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
+from gallery_api.rest_api.models import Photo, GalleryUser
+from gallery_api.rest_api import serializers
 
 VK_APP_SECRET = config("VK_APP_SECRET")
 
@@ -25,18 +30,25 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class PhotoListView(views.APIView):
+photo_list_201_response = openapi.Response("CREATED", serializers.PhotoListSerializer)
+
+
+class PhotoListView(generics.GenericAPIView):
     """
     API endpoint that allows photos to be viewed or edited.
     """
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [TokenAuthentication, BasicAuthentication]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    parser_classes = [FormParser, MultiPartParser]
+
+    serializer_class = serializers.PhotoListSerializer
 
     def get(self, request):
         photos = Photo.objects.all()
         serializer = serializers.PhotoListSerializer(photos, many=True)
         return Response(serializer.data)
 
+    @swagger_auto_schema(responses={201: photo_list_201_response, 400: "BAD_REQUEST", 401: "NOT_AUTHORIZED"})
     def post(self, request):
         user = request.user
         data = request.data
@@ -47,6 +59,7 @@ class PhotoListView(views.APIView):
             serializer.save(user=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class LoginVK(views.APIView):

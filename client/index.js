@@ -47,7 +47,7 @@ function createCardTitile(imageObj) {
   titleLink.href = detailedPageLink(imageObj);
   const titleTag = document.createElement("h5");
   titleTag.classList.add("card-title", "text-center", "d-block", "text-truncate", "px-3", "mx-auto");
-  const titleText = document.createTextNode(imageObj.description);
+  const titleText = document.createTextNode(imageObj.name);
 
   titleTag.appendChild(titleText);
   titleLink.appendChild(titleTag);
