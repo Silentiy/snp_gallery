@@ -35,6 +35,7 @@ urlpatterns = [
     path('photos/', photo.PhotoListView.as_view()),
     path("vk-login/", login_vk.LoginVK.as_view()),
     path("user/", user.UserData.as_view()),
+    path("vk-logout/", login_vk.LoginVKDeleteToken.as_view()),
     path('api-token-auth/', obtain_auth_token),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0),

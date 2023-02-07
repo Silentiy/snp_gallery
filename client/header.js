@@ -167,7 +167,7 @@ export async function logOut() {
   if (apiToken) {
     console.log("we are trying to logOut");
     console.log(JSON.stringify(data));
-    const logOutUrl = "http://127.0.0.1:8000/vk-login/";
+    const logOutUrl = "http://127.0.0.1:8000/vk-logout/";
     try {
       const response = await fetch(logOutUrl, {
         method: "DELETE",
