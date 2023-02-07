@@ -1,12 +1,5 @@
-from django.contrib.auth.models import User
-from .models import Photo
+from gallery_api.rest_api.models.photo import Photo
 from rest_framework import serializers
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'groups']
 
 
 class PhotoListSerializer(serializers.ModelSerializer):
@@ -18,9 +11,3 @@ class PhotoListSerializer(serializers.ModelSerializer):
                             "updated_file", "updated_upload_date"]
 
     user = serializers.ReadOnlyField(source='user.username')
-
-
-class LoginVKSerializer(serializers.Serializer):
-    code = serializers.CharField()
-    network = serializers.CharField()
-

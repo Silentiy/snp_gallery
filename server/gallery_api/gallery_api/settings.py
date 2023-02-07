@@ -41,7 +41,10 @@ INSTALLED_APPS = [
 
     'django.contrib.staticfiles',
     'drf_yasg',
+
     'corsheaders',
+
+    'service_objects',
 
     'gallery_api.rest_api.apps.RestApiConfig',
 ]

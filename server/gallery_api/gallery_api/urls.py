@@ -5,14 +5,16 @@ from rest_framework import routers
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.authtoken.views import obtain_auth_token
-from gallery_api.rest_api import views
+from gallery_api.rest_api.views import photo
+from gallery_api.rest_api.views import login_vk
+from gallery_api.rest_api.views import user
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 router = routers.DefaultRouter()
-# router.register(r'users', views.UserViewSet)
+# router.register(r'users', user.UserViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -30,8 +32,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('photos/', views.PhotoListView.as_view()),
-    path("vk-login/", views.LoginVK.as_view()),
+    path('photos/', photo.PhotoListView.as_view()),
+    path("vk-login/", login_vk.LoginVK.as_view()),
+    path("user/", user.UserData.as_view()),
     path('api-token-auth/', obtain_auth_token),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0),

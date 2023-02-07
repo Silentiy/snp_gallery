@@ -22,7 +22,7 @@ export async function isLogged() {
 }
 
 async function requestUserData(apiToken) {
-  const userUrl = "http://127.0.0.1:8000/vk-login/";
+  const userUrl = "http://127.0.0.1:8000/user/";
   try {
     const response = await fetch(userUrl, {
       method: "GET",
@@ -110,7 +110,7 @@ export async function sendCode(data) {
 export function createloggedInHeader(userData) {
   if (userData) {
     // do we get user_data or error and it's description
-    const userName = userData.username;
+    const userName = userData.user.username;
     console.log(userName);
     if (userName) {
       putUserContent(userData);
@@ -127,7 +127,7 @@ function putUserContent(data) {
   const userAvatar = document.getElementById("user-avatar");
   const userName = document.getElementById("username");
   userAvatar.src = data.social_avatar_url;
-  const fullName = document.createTextNode(`${data.first_name} ${data.last_name}`);
+  const fullName = document.createTextNode(`${data.user.first_name} ${data.user.last_name}`);
   userName.appendChild(fullName);
 }
 
