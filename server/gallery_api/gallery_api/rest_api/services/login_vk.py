@@ -4,7 +4,6 @@ from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from rest_framework import status
-from rest_framework.response import Response
 
 from decouple import config
 from service_objects.services import Service
@@ -172,16 +171,3 @@ class LoginVKProcess(Service):
         data = {"error": "'code: string' and 'network: string' are obligatory in this request"}
         return JsonResponse(data, status=status.HTTP_400_BAD_REQUEST)
 
-
-class LogoutVKProcess(Service):
-
-    user_id = forms.IntegerField()
-
-    def process(self):
-        user_id = self.cleaned_data["user_id"]
-        try:
-            token = Token.objects.get(user_id=user_id)
-            token.delete()
-            return Response({"success": "token deleted"}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"error": f"token not found, {e}"}, status=status.HTTP_404_NOT_FOUND)

@@ -3,7 +3,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import permissions
 
 from gallery_api.rest_api.serializers.login_vk import LoginVKSerializer
-from gallery_api.rest_api.services.login_vk import LoginVKProcess, LogoutVKProcess
+from gallery_api.rest_api.services.login_vk import LoginVKProcess
+from gallery_api.rest_api.services.logout_vk import LogoutVKProcess
 
 
 class LoginVK(generics.GenericAPIView):
