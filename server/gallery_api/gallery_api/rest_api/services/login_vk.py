@@ -21,11 +21,6 @@ VK_APP_SECRET = config("VK_APP_SECRET")
 
 
 class LoginVKProcess(Service):
-
-    # def __init__(self, request):
-    #     super().__init__()
-    #     self.request = request
-
     code = forms.CharField()
     network = forms.CharField()
 
@@ -110,7 +105,8 @@ class LoginVKProcess(Service):
             return user
         return serializer.errors
 
-    def update_user(self, gallery_user, user_data):
+    @staticmethod
+    def update_user(gallery_user, user_data):
         username = user_data["user"].pop("username")
         serializer = GalleryUserSerializer(gallery_user, data=user_data, partial=True)
         if serializer.is_valid(raise_exception=True):
@@ -189,5 +185,3 @@ class LogoutVKProcess(Service):
             return Response({"success": "token deleted"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": f"token not found, {e}"}, status=status.HTTP_404_NOT_FOUND)
-
-

@@ -22,8 +22,6 @@ class GalleryUserSerializer(serializers.ModelSerializer):
         try:
             user = User.objects.get_by_natural_key(username=user_data["username"])
         except:
-            pass
-        if not user:
             user = User.objects.create(**user_data)
         gallery_user = GalleryUser.objects.create(user=user, **validated_data)
         return user

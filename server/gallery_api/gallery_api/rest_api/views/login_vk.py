@@ -17,9 +17,6 @@ class LoginVK(generics.GenericAPIView):
     serializer_class = LoginVKSerializer
 
     def post(self, request):
-        # login_vk = LoginVKProcess(request)
-        # return login_vk.process()
-
         return LoginVKProcess.execute({
              'code': request.data["code"],
              'network': request.data["network"],
