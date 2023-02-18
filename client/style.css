@@ -29,7 +29,7 @@
 }
 
 .card-main {
-    min-width: 18rem; 
+    min-width: 18rem;
     width: max-content;
 }
 
@@ -41,7 +41,7 @@
     text-decoration: none;
 }
 
-.profile-card, 
+.profile-card,
 .detailed-card {
     max-width: 700px;
 }
@@ -78,6 +78,20 @@
     display: none;
 }
 
+.social-icon-google,
+.social-icon-vk {
+	width: 32px;
+	height: 32px;
+}
+
+#vk-btn {
+    background: #4a76a8;
+}
+
+#google-btn {
+    border-color: #d2d2d2;
+}
+
 /* OVERLAY */
 /* parent container */
 .overlay-parent{
@@ -98,7 +112,7 @@
     /* appearance */
     background: black;
     /* animation */
-    -webkit-transition: visibility 0s, opacity 015s linear; 
+    -webkit-transition: visibility 0s, opacity 015s linear;
     transition: visibility 0s, opacity 0.15s linear;
 }
 
@@ -120,17 +134,17 @@
     /* appearance */
     color: white;
     /* animation  */
-    -webkit-transition: visibility 0s, opacity 015s linear; 
+    -webkit-transition: visibility 0s, opacity 015s linear;
     transition: visibility 0s, opacity 0.15s linear;
 }
 
 /* hover on parent container */
 .overlay-parent:hover .overlay-background{
     visibility: visible;
-    opacity: 0.7; 
+    opacity: 0.7;
 }
 
 .overlay-parent:hover .overlay-text{
     visibility: visible;
-    opacity: 1.0; 
+    opacity: 1.0;
 }

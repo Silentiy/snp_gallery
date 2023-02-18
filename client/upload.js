@@ -1,6 +1,6 @@
-import { readApiToken } from "./header.js";
+import { readLocalStorage } from "./header.js";
 
-const token = readApiToken();
+const token = readLocalStorage();
 console.log("upload.js");
 const imagePreviewArea = document.getElementById("image_preview_area");
 const sendButton = document.getElementById("photo-send");

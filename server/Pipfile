@@ -4,13 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-drf-yasg = "*"
-python-decouple = "*"
+drf-yasg = "==1.21.4"
+python-decouple = "==3.7"
 djangorestframework = "~=3.12"
-django = ">=2.2"
-pillow = "*"
-django-cors-headers = "*"
-django-service-objects = "*"
+django = "==4.1.*"
+pillow = "==9.4.0"
+django-cors-headers = "==3.13.0"
+django-service-objects = "==0.7.*"
+django-allauth = "*"
+dj-rest-auth = "*"
+django-ckeditor = "*"
+pre-commit = "*"
 
 [dev-packages]
 
