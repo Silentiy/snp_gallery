@@ -9,7 +9,7 @@ from gallery_api.rest_api.views import photo
 from gallery_api.rest_api.views import login
 from gallery_api.rest_api.views import user
 from dj_rest_auth.registration.views import RegisterView
-
+from dj_rest_auth.views import LogoutView
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -42,6 +42,8 @@ urlpatterns = [
     path("dj-rest-auth/registration/", RegisterView.as_view(), name="reg"),
     path("dj-rest-auth/vk/", login.LoginVK.as_view(), name="vk_login"),
     path("dj-rest-auth/google/", login.LoginGoogle.as_view(), name="google_login"),
+    path("dj-rest-auth/logout/", LogoutView.as_view(), name="rest_logout"),
+    re_path(r"^ckeditor/", include("ckeditor_uploader.urls"), name="ckeditor_uploader"),
     re_path(
         r"^swagger(?P<format>\.json|\.yaml)$",
         schema_view.without_ui(cache_timeout=0),
