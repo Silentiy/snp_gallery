@@ -31,9 +31,9 @@ export async function isLogged() {
     const userData = await requestUserData(apiToken);
     console.log("user data in is_logged", userData);
     createloggedInHeader(userData);
-  } else {
-    socialLogin();
+    return userData;
   }
+  return socialLogin();
 }
 
 async function requestUserData(apiToken) {
@@ -67,9 +67,11 @@ export async function socialLogin() {
         setApiToken(apiToken);
         const userData = await requestUserData(apiToken);
         createloggedInHeader(userData);
+        return userData;
       }
     }
   }
+  return null;
 }
 
 export function retieveCode() {
@@ -80,7 +82,6 @@ export function retieveCode() {
   console.log("code", code);
   if (code) {
     code = decodeURIComponent(code);
-    // code = encodeURIComponent(code);
     const data = { code };
     return data;
   }
@@ -155,21 +156,31 @@ export function createloggedInHeader(userData) {
   }
 }
 
+export function getUserName(userData) {
+  let userName;
+  if (userData.gallery_user.nickname !== null) {
+    userName = userData.gallery_user.nickname;
+  } else {
+    userName = `${userData.first_name} ${userData.last_name}`;
+  }
+  return userName;
+}
+
+export function getUserPictureSrc(userData) {
+  let userPictureSrc;
+  if (userData.gallery_user.avatar !== null) {
+    userPictureSrc = userData.gallery_user.avatar;
+  } else {
+    userPictureSrc = userData.social_user.avatar;
+  }
+  return userPictureSrc;
+}
+
 function putUserContent(data) {
   const userAvatar = document.getElementById("user-avatar");
+  userAvatar.src = getUserPictureSrc(data);
   const userNameDiv = document.getElementById("username");
-  let userName;
-  if (data.gallery_user.avatar !== null) {
-    userAvatar.src = data.gallery_user.avatar;
-  } else {
-    userAvatar.src = data.social_user.avatar;
-  }
-
-  if (data.gallery_user.nickname !== null) {
-    userName = document.createTextNode(data.gallery_user.nickname);
-  } else {
-    userName = document.createTextNode(`${data.first_name} ${data.last_name}`);
-  }
+  const userName = document.createTextNode(getUserName(data));
   userNameDiv.appendChild(userName);
 }
 

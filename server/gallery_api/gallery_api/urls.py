@@ -8,6 +8,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from gallery_api.rest_api.views import photo
 from gallery_api.rest_api.views import login
 from gallery_api.rest_api.views import user
+from gallery_api.rest_api.views import gallery_user
 from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LogoutView
 from rest_framework import permissions
@@ -38,6 +39,7 @@ urlpatterns = [
     path("api-token-auth/", obtain_auth_token),
     path("photos/", photo.PhotoListView.as_view()),
     path("user/", user.UserData.as_view()),
+    path("gallery-user/", gallery_user.GalleryUserView.as_view()),
     path("accounts/", include("allauth.urls")),
     path("dj-rest-auth/registration/", RegisterView.as_view(), name="reg"),
     path("dj-rest-auth/vk/", login.LoginVK.as_view(), name="vk_login"),
