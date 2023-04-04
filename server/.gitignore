@@ -1,8 +1,0 @@
-*.env
-images/
-client/node_modules/
-.idea/
-*.sqlite3
-__pycache__/
-media/
-static/
