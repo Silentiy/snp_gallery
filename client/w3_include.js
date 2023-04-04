@@ -1,27 +1,31 @@
-function includeHTML() {
-    var z, i, elmnt, file, xhttp;
-    /* Loop through a collection of all HTML elements: */
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-      elmnt = z[i];
-      /*search for elements with a certain atrribute:*/
-      file = elmnt.getAttribute("w3-include-html");
-      if (file) {
-        /* Make an HTTP request using the attribute value as the file name: */
-        xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4) {
-            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-            if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-            /* Remove the attribute, and call this function once more: */
-            elmnt.removeAttribute("w3-include-html");
-            includeHTML();
-          }
-        }
-        xhttp.open("GET", file, true);
-        xhttp.send();
-        /* Exit the function: */
-        return;
+// based on https://www.w3schools.com/howto/howto_html_include.asp
+async function includeHTML() {
+  const w3elements = [];
+  let elmnt;
+  let file;
+  const elmnts = document.getElementsByTagName("*"); // get all HTML elements
+  console.log("include invoked");
+  /* loop through a collection of all HTML elements and prepare
+  collection of elements with w3-include-html tags */
+  for (let i = 0; i < elmnts.length; i++) {
+    elmnt = elmnts[i];
+    if (elmnt.hasAttribute("w3-include-html")) {
+      w3elements.push(elmnt);
+    }
+  }
+
+  while (w3elements.length !== 0) {
+    const fetchElement = w3elements.pop();
+    file = fetchElement.getAttribute("w3-include-html"); // get a value of the w3-include-html tag
+    if (file) {
+      try {
+        const response = await fetch(file);
+        const responseText = await response.text();
+        fetchElement.innerHTML = responseText;
+        fetchElement.removeAttribute("w3-include-html");
+      } catch (error) {
+        console.error(`The attempt to get ${file}-file is rejected!`, error);
       }
     }
   }
+}

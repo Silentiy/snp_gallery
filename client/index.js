@@ -1,30 +1,18 @@
+import { makeRequestToApi, createCardVotesAndButtons } from "./common.js";
+
 const divPictures = document.getElementById("pictures");
 
-makeRequestToUnsplash();
+createPageContent();
 
-async function requestAccessKey() {
-  try {
-    const response = await fetch("http://localhost:9000");
-    const jsonData = await response.json();
-    return await jsonData.access_key;
-  } catch (error) {
-    console.error("The attempt to get API key is rejected!", error);
-    return error;
-  }
-}
+async function createPageContent() {
+  const url = "http://127.0.0.1:8000/photos/";
 
-async function makeRequestToUnsplash() {
-  const ACCESS_KEY = await requestAccessKey();
-  const requestUrl = `https://api.unsplash.com/search/photos?page=1&query=buildings&client_id=${ACCESS_KEY}`;
-  try {
-    const response = await fetch(requestUrl);
-    const jsonData = await response.json();
-    jsonData.results.forEach((imageObj) => {
-      createCard(imageObj);
-    });
-  } catch (error) {
-    console.error("The request to Unsplash is rejected!", error);
-  }
+  const jsonData = await makeRequestToApi(url);
+  console.log(jsonData);
+
+  jsonData.forEach((imageObj) => {
+    createCard(imageObj);
+  });
 }
 
 function detailedPageLink(imageObj) {
@@ -42,7 +30,7 @@ function createCard(imageObj) {
   cardTopPart.classList.add("d-flex");
   cardTopPart.appendChild(fiction);
   cardTopPart.appendChild(createCardPicture(imageObj));
-  cardTopPart.appendChild(createCardVoteButtons(imageObj));
+  cardTopPart.appendChild(createCardVotesAndButtons(imageObj));
   // card bottom part div
   const cardBottomPart = createCardBottomPart(imageObj);
   // append content into cardDiv
@@ -59,7 +47,7 @@ function createCardTitile(imageObj) {
   titleLink.href = detailedPageLink(imageObj);
   const titleTag = document.createElement("h5");
   titleTag.classList.add("card-title", "text-center", "d-block", "text-truncate", "px-3", "mx-auto");
-  const titleText = document.createTextNode(imageObj.description);
+  const titleText = document.createTextNode(imageObj.name);
 
   titleTag.appendChild(titleText);
   titleLink.appendChild(titleTag);
@@ -81,12 +69,12 @@ function createCardPicture(imageObj) {
   // picture
   const image = document.createElement("img");
   image.classList.add("card-img-top", "img-main");
-  image.src = imageObj.urls.regular;
-  image.alt = imageObj.alt_description;
+  image.src = imageObj.file;
+  image.alt = imageObj.description;
   // overlay child (picture description)
   const overlayChild = document.createElement("div");
   overlayChild.classList.add("overlay-text", "overflow-hidden", "text-center", "ps-3", "pe-3");
-  const overlayText = document.createTextNode("Short informative description. Possibly, short informative description that takes a lot of space.");
+  const overlayText = document.createTextNode(imageObj.description);
   overlayChild.appendChild(overlayText);
 
   pictureLink.appendChild(overlayBackgroud);
@@ -98,43 +86,14 @@ function createCardPicture(imageObj) {
   return overlayParent;
 }
 
-function createCardVoteButtons(imageObj) {
-  const votesButtonsDiv = document.createElement("div");
-  votesButtonsDiv.classList.add("my-auto", "mx-3", "buttons-votes", "text-center");
-
-  const plusSign = document.createTextNode("+");
-  const minusSign = document.createTextNode("-");
-  const votesNumber = document.createTextNode(imageObj.likes);
-
-  for (let i = 0; i < 2; i += 1) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.classList.add("btn", "btn-sm", "btn-outline-secondary", "vote-btn");
-    if (i === 0) {
-      button.appendChild(plusSign);
-    } else {
-      button.appendChild(minusSign);
-    }
-    votesButtonsDiv.appendChild(button);
-  }
-
-  const votesDiv = document.createElement("div");
-  votesDiv.classList.add("votes", "d-block", "pt-2", "pb-2", "text-center");
-  votesDiv.appendChild(votesNumber);
-  const secondButton = votesButtonsDiv.lastChild;
-  votesButtonsDiv.insertBefore(votesDiv, secondButton);
-
-  return votesButtonsDiv;
-}
-
 function createCardBottomPart(imageObj) {
   const bottomDiv = document.createElement("div");
   bottomDiv.classList.add("card-body", "pt-1", "pb-2");
   // author and date content
   const authorDateContainer = document.createElement("small");
   authorDateContainer.classList.add("card-text", "text-muted");
-  const addedDate = imageObj.created_at.split("T")[0];
-  const authorDate = document.createTextNode(`Author: ${imageObj.user.username}, added: ${addedDate}`);
+  const addedDate = imageObj.upload_date.split("T")[0];
+  const authorDate = document.createTextNode(`Author: ${imageObj.user}, added: ${addedDate}`);
   authorDateContainer.appendChild(authorDate);
   // comments
   const commentsDiv = document.createElement("div");
@@ -152,4 +111,25 @@ function createCardBottomPart(imageObj) {
   bottomDiv.appendChild(commentsDiv);
 
   return bottomDiv;
+}
+
+export default function addPaginationButtonsToFooter() {
+  const paginationSection = document.getElementById("pagination");
+  paginationSection.className = "";
+  paginationSection.classList.add("text-center", "py-1", "bg-white");
+
+  const backButton = document.createElement("button");
+  backButton.type = "button";
+  backButton.classList.add("btn", "btn-outline-secondary", "btn-sm", "my-2");
+  const backButtonText = document.createTextNode("\u2190 back");
+  backButton.appendChild(backButtonText);
+
+  const forwardButton = document.createElement("button");
+  forwardButton.type = "button";
+  forwardButton.classList.add("btn", "btn-outline-secondary", "btn-sm", "my-2");
+  const forwardButtonText = document.createTextNode("forward \u2192 ");
+  forwardButton.appendChild(forwardButtonText);
+
+  paginationSection.appendChild(backButton);
+  paginationSection.appendChild(forwardButton);
 }

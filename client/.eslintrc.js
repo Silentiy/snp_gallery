@@ -19,5 +19,6 @@ module.exports = {
     "no-plusplus": ["error", {
       allowForLoopAfterthoughts: true,
     }],
+    "import/extensions": ["warn", "always"],
   },
 };
