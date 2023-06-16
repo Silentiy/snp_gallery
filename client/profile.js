@@ -1,4 +1,5 @@
 import { getUserName, getUserPictureSrc, readLocalStorage } from "./header.js";
+import { baseUrl } from "./common.js";
 
 const nickNameInput = document.getElementById("nick_name");
 const userDescriptionInput = document.getElementById("about_me");
@@ -36,7 +37,7 @@ export default async function createProfilePage(user) {
 async function sendNickName() {
   console.log("send nickName started");
 
-  const galleryUserDataUrl = "http://127.0.0.1:8000/gallery-user/";
+  const galleryUserDataUrl = `${baseUrl}gallery-user/`;
 
   const formdata = new FormData();
   const headers = new Headers();

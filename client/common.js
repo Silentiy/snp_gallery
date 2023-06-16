@@ -1,10 +1,12 @@
+export const baseUrl = (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") ? "http://localhost:8000/" : "http://silentiy.beget.tech/";
+
 export async function makeRequestToApi(requestUrl) {
   try {
     const response = await fetch(requestUrl);
     const jsonData = await response.json();
     return await jsonData;
   } catch (error) {
-    console.error("The request to Unsplash is rejected!", error);
+    console.error(`The request to ${requestUrl} is rejected!`, error);
     return error;
   }
 }

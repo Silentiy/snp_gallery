@@ -1,11 +1,13 @@
-import { makeRequestToApi, createCardVotesAndButtons } from "./common.js";
+import { makeRequestToApi, createCardVotesAndButtons, baseUrl } from "./common.js";
+
+console.log(window.location.hostname, baseUrl);
 
 const divPictures = document.getElementById("pictures");
 
 createPageContent();
 
 async function createPageContent() {
-  const url = "http://127.0.0.1:8000/photos/";
+  const url = `${baseUrl}photos`;
 
   const jsonData = await makeRequestToApi(url);
   console.log(jsonData);

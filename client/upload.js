@@ -1,4 +1,5 @@
 import { readLocalStorage } from "./header.js";
+import { baseUrl } from "./common.js";
 
 const token = readLocalStorage("API_TOKEN");
 console.log("upload.js");
@@ -51,19 +52,19 @@ async function uploadFile() {
   console.log("formdata.get('name')", formdata.get("name"), "formdata.get('description')", formdata.get("description"));
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/photos/", requestOptions);
-    const jsonData = await response.json();
-    return await jsonData;
+    const response = await fetch(`${baseUrl}photos/`, requestOptions);
+    const responseJson = await response.json();
+    return responseJson;
   } catch (error) {
-    console.error("The request to Unsplash is rejected!", error);
-    return error;
+    console.error("The request to upload photo was rejected!", error);
+    return error.status;
   }
 }
 
 async function cleanForm() {
   const result = await uploadFile();
-  if (result) {
-    console.log(result);
+  console.log(result);
+  if ("id" in result) {
     fileInput.value = "";
     nameInput.value = "";
     descriptionInput.value = "";
@@ -75,5 +76,8 @@ async function cleanForm() {
     const previewText = document.createTextNode("Image preview...");
     previewTextParagraph.appendChild(previewText);
     imagePreviewArea.appendChild(previewTextParagraph);
+    alert("Your photo was successfully uploaded and will appear on the main page after approval!");
+  } else {
+    alert("You must fill all the fields provided!");
   }
 }

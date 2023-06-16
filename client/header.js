@@ -1,3 +1,5 @@
+import { baseUrl } from "./common.js";
+
 export function initializeLogin() {
   const currentUrl = window.location.href.split("?")[0];
 
@@ -37,7 +39,7 @@ export async function isLogged() {
 }
 
 async function requestUserData(apiToken) {
-  const userUrl = "http://127.0.0.1:8000/user/";
+  const userUrl = `${baseUrl}user/`;
   try {
     const response = await fetch(userUrl, {
       method: "GET",
@@ -91,8 +93,8 @@ export function retieveCode() {
 function clearUrl() {
   const currentUrl = window.location.href;
   console.log("clearUrl: currentUrl", currentUrl);
-  const baseUrl = currentUrl.split("?")[0];
-  window.history.replaceState(null, null, baseUrl);
+  const baseWindowUrl = currentUrl.split("?")[0];
+  window.history.replaceState(null, null, baseWindowUrl);
 }
 
 export async function sendCode(data) {
@@ -112,9 +114,9 @@ export async function sendCode(data) {
     console.log(JSON.stringify(dataToSend));
 
     if (provider === "VK") {
-      codeUrl = "http://127.0.0.1:8000/dj-rest-auth/vk/";
+      codeUrl = `${baseUrl}dj-rest-auth/vk/`;
     } else if (provider === "Google") {
-      codeUrl = "http://127.0.0.1:8000/dj-rest-auth/google/";
+      codeUrl = `${baseUrl}dj-rest-auth/google/`;
     } else {
       codeUrl = null;
       alert("Social authentication provider was not set");
@@ -227,7 +229,7 @@ export async function logOut() {
 async function sendDeleteTokenRequest(apiToken) {
   if (apiToken) {
     console.log("we are trying to logOut");
-    const logOutUrl = "http://127.0.0.1:8000/dj-rest-auth/logout/";
+    const logOutUrl = `${baseUrl}dj-rest-auth/logout/`;
     try {
       const response = await fetch(logOutUrl, {
         method: "POST",
