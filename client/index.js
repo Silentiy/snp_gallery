@@ -71,7 +71,7 @@ function createCardPicture(imageObj) {
   // picture
   const image = document.createElement("img");
   image.classList.add("card-img-top", "img-main");
-  image.src = imageObj.file;
+  image.src = imageObj.photo_200_100;
   image.alt = imageObj.description;
   // overlay child (picture description)
   const overlayChild = document.createElement("div");
@@ -94,7 +94,7 @@ function createCardBottomPart(imageObj) {
   // author and date content
   const authorDateContainer = document.createElement("small");
   authorDateContainer.classList.add("card-text", "text-muted");
-  const addedDate = imageObj.upload_date.split("T")[0];
+  const addedDate = imageObj.created_at.split("T")[0];
   const authorDate = document.createTextNode(`Author: ${imageObj.user}, added: ${addedDate}`);
   authorDateContainer.appendChild(authorDate);
   // comments

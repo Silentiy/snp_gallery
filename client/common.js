@@ -1,4 +1,4 @@
-export const baseUrl = (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") ? "http://localhost:8000/" : "http://silentiy.beget.tech/";
+export const baseUrl = (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") ? "http://localhost:8000/api/" : "http://silentiy.beget.tech/api/";
 
 export async function makeRequestToApi(requestUrl) {
   try {

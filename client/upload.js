@@ -32,7 +32,7 @@ async function uploadFile() {
   const formdata = new FormData();
   const myHeaders = new Headers();
 
-  formdata.append("file", fileInput.files[0]);
+  formdata.append("photo", fileInput.files[0]);
   const photoName = nameInput.value;
   const photoDescription = descriptionInput.value;
   formdata.append("name", photoName);
