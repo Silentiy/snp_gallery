@@ -170,8 +170,8 @@ export function getUserName(userData) {
 
 export function getUserPictureSrc(userData) {
   let userPictureSrc;
-  if (userData.gallery_user.avatar !== null) {
-    userPictureSrc = userData.gallery_user.avatar;
+  if (userData.gallery_user.avatar_url !== null) {
+    userPictureSrc = userData.gallery_user.avatar_url;
   } else {
     userPictureSrc = userData.social_user.avatar;
   }

@@ -30,7 +30,7 @@ export default async function createProfilePage(user) {
   if (user.gallery_user.nickname) {
     method = "PATCH";
   } else {
-    method = "POST";
+    method = "PUT";
   }
 }
 
