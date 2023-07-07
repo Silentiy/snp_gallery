@@ -95,7 +95,7 @@ function createCardBottomPart(imageObj) {
   const authorDateContainer = document.createElement("small");
   authorDateContainer.classList.add("card-text", "text-muted");
   const addedDate = imageObj.created_at.split("T")[0];
-  const authorDate = document.createTextNode(`Author: ${imageObj.user}, added: ${addedDate}`);
+  const authorDate = document.createTextNode(`Author: ${imageObj.username}, added: ${addedDate}`);
   authorDateContainer.appendChild(authorDate);
   // comments
   const commentsDiv = document.createElement("div");

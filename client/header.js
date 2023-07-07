@@ -173,7 +173,7 @@ export function getUserPictureSrc(userData) {
   if (userData.gallery_user.avatar_url !== null) {
     userPictureSrc = userData.gallery_user.avatar_url;
   } else {
-    userPictureSrc = userData.social_user.avatar;
+    userPictureSrc = userData.social_user.avatar_url;
   }
   return userPictureSrc;
 }
