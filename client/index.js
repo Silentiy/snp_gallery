@@ -1,20 +1,31 @@
-import { makeRequestToApi, createCardVotesAndButtons, baseUrl } from "./common.js";
-
-console.log(window.location.hostname, baseUrl);
+import { sendRequestToApi, baseUrl } from "./common.js";
+import { createCardVoteButtons } from "./vote.js";
 
 const divPictures = document.getElementById("pictures");
-
-createPageContent();
+await createPageContent();
 
 async function createPageContent() {
+  console.log("createPageContent");
   const url = `${baseUrl}photos`;
 
-  const jsonData = await makeRequestToApi(url);
-  console.log(jsonData);
+  const jsonData = await sendRequestToApi(url);
 
-  jsonData.forEach((imageObj) => {
-    createCard(imageObj);
-  });
+  if (!("error" in jsonData)) {
+    if (jsonData.length > 0) {
+      jsonData.forEach((imageObj) => {
+        createCard(imageObj);
+      });
+    } else {
+      const noPicturesText = document.createTextNode(`Surprisingly, there seems to be no photos yet!
+      Please, refresh the page a bit later or be the first to post an image!`);
+      divPictures.appendChild(noPicturesText);
+    }
+  } else {
+    const getPicturesErrorText = document.createTextNode(`Regrettably, an error occured
+     while downloading photos. Please, refresh the page`);
+    divPictures.appendChild(getPicturesErrorText);
+    console.error("Error in createPageContent", jsonData);
+  }
 }
 
 function detailedPageLink(imageObj) {
@@ -24,6 +35,7 @@ function detailedPageLink(imageObj) {
 function createCard(imageObj) {
   const cardDiv = document.createElement("div");
   cardDiv.classList.add("card", "card-main", "shadow-sm", "ms-2", "me-2", "mb-4");
+  cardDiv.setAttribute("id", imageObj.id);
   // fictious div for the left margin of the picture
   const fiction = document.createElement("div");
   fiction.classList.add("fiction", "ps-3");
@@ -32,7 +44,7 @@ function createCard(imageObj) {
   cardTopPart.classList.add("d-flex");
   cardTopPart.appendChild(fiction);
   cardTopPart.appendChild(createCardPicture(imageObj));
-  cardTopPart.appendChild(createCardVotesAndButtons(imageObj));
+  cardTopPart.appendChild(createCardVoteButtons(imageObj));
   // card bottom part div
   const cardBottomPart = createCardBottomPart(imageObj);
   // append content into cardDiv
@@ -71,8 +83,9 @@ function createCardPicture(imageObj) {
   // picture
   const image = document.createElement("img");
   image.classList.add("card-img-top", "img-main");
-  image.src = imageObj.photo_200_100;
+  image.src = imageObj.photo_200_100_url;
   image.alt = imageObj.description;
+  image.setAttribute("id", imageObj.id);
   // overlay child (picture description)
   const overlayChild = document.createElement("div");
   overlayChild.classList.add("overlay-text", "overflow-hidden", "text-center", "ps-3", "pe-3");
@@ -113,25 +126,4 @@ function createCardBottomPart(imageObj) {
   bottomDiv.appendChild(commentsDiv);
 
   return bottomDiv;
-}
-
-export default function addPaginationButtonsToFooter() {
-  const paginationSection = document.getElementById("pagination");
-  paginationSection.className = "";
-  paginationSection.classList.add("text-center", "py-1", "bg-white");
-
-  const backButton = document.createElement("button");
-  backButton.type = "button";
-  backButton.classList.add("btn", "btn-outline-secondary", "btn-sm", "my-2");
-  const backButtonText = document.createTextNode("\u2190 back");
-  backButton.appendChild(backButtonText);
-
-  const forwardButton = document.createElement("button");
-  forwardButton.type = "button";
-  forwardButton.classList.add("btn", "btn-outline-secondary", "btn-sm", "my-2");
-  const forwardButtonText = document.createTextNode("forward \u2192 ");
-  forwardButton.appendChild(forwardButtonText);
-
-  paginationSection.appendChild(backButton);
-  paginationSection.appendChild(forwardButton);
 }

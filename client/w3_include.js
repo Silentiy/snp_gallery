@@ -1,5 +1,6 @@
 // based on https://www.w3schools.com/howto/howto_html_include.asp
-async function includeHTML() {
+
+export default async function includeHTML() {
   const w3elements = [];
   let elmnt;
   let file;
@@ -14,13 +15,15 @@ async function includeHTML() {
     }
   }
 
+  /* eslint-disable no-await-in-loop */
   while (w3elements.length !== 0) {
     const fetchElement = w3elements.pop();
     file = fetchElement.getAttribute("w3-include-html"); // get a value of the w3-include-html tag
     if (file) {
       try {
         const response = await fetch(file);
-        const responseText = await response.text();
+        const responseText = await response.text(); // depends on the result of the previous line
+        // see https://eslint.org/docs/latest/rules/no-await-in-loop
         fetchElement.innerHTML = responseText;
         fetchElement.removeAttribute("w3-include-html");
       } catch (error) {
@@ -28,4 +31,5 @@ async function includeHTML() {
       }
     }
   }
+  console.log("include stopped");
 }

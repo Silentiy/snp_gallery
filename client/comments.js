@@ -1,4 +1,5 @@
-import { makeRequestToApi, requestAccessKey, createCardVotesAndButtons } from "./common.js";
+import { sendRequestToApi, baseUrl } from "./common.js";
+import { createCardVoteButtons } from "./vote.js";
 
 const divContent = document.getElementById("content");
 // const divLeaveComment = document.getElementById("leave-a-comment");
@@ -7,12 +8,10 @@ const divContent = document.getElementById("content");
 createPageContent();
 
 async function createPageContent() {
-  const ACCESS_KEY = await requestAccessKey();
-  const currentUrl = window.location.href;
-  const photoId = String(currentUrl).split("=")[1];
-  const url = `https://api.unsplash.com/photos/${photoId}?client_id=${ACCESS_KEY}`;
-
-  const jsonData = await makeRequestToApi(url);
+  const picId = window.location.href.split("=")[1];
+  const url = `${baseUrl}photos/${picId}`;
+  const jsonData = await sendRequestToApi(url);
+  console.log(jsonData);
   divContent.prepend(createPictureCard(jsonData));
   // divContent.appendChild(createLeaveCommentCard(apiResponse));
   // divContent.appendChild(createCommentsCards(apiResponse));
@@ -30,22 +29,22 @@ function createPictureCard(imageObj) {
   // title
   const pictureCardTitleContainer = document.createElement("h5");
   pictureCardTitleContainer.classList.add("card-title", "text-center", "mt-2", "mx-auto");
-  const pictureCardTitle = document.createTextNode(imageObj.description);
+  const pictureCardTitle = document.createTextNode(imageObj.name);
   pictureCardTitleContainer.appendChild(pictureCardTitle);
 
   // picture and buttons
   const divPictureAndButtons = document.createElement("div");
-  divPictureAndButtons.classList.add("d-flex");
+  divPictureAndButtons.classList.add("d-flex", "text-center", "mx-auto");
   // picture
   const imageDiv = document.createElement("div");
   imageDiv.classList.add("img-detailed");
   const image = document.createElement("img");
-  image.src = imageObj.urls.regular;
+  image.src = imageObj.photo_200_100_url;
   image.alt = imageObj.alt_description;
   image.classList.add("card-img-top", "img-fluid", "ps-3");
   imageDiv.appendChild(image);
   // buttons
-  const buttons = createCardVotesAndButtons(imageObj);
+  const buttons = createCardVoteButtons(imageObj);
   // construct picture and buttons div
   divPictureAndButtons.appendChild(imageDiv);
   divPictureAndButtons.appendChild(buttons);
@@ -54,8 +53,8 @@ function createPictureCard(imageObj) {
   cardBodyDiv.classList.add("card-body", "pt-1", "pb-2");
   // author and date
   const authorDateContainer = document.createElement("small");
-  authorDateContainer.classList.add("card-text", "text-muted");
-  const authorDateContent = document.createTextNode(`${imageObj.user.username}, added ${imageObj.created_at.split("T")[0]}`);
+  authorDateContainer.classList.add("card-text", "text-muted", "ps-2");
+  const authorDateContent = document.createTextNode(`${imageObj.username} added ${imageObj.updated_at.split("T")[0]}`);
   authorDateContainer.appendChild(authorDateContent);
   // description title
   const descriptionTitleContainer = document.createElement("h6");
@@ -65,9 +64,7 @@ function createPictureCard(imageObj) {
   // description content
   const descriptionContainer = document.createElement("div");
   descriptionContainer.classList.add("bg-light", "ps-2", "pe-2", "mb-2");
-  const descriptionContent = document.createTextNode("Photo has been made... Somehow long description of the photo which says about place,"
-    + " time and circumstances of picture taking, as well as author's thoughts and opinion and"
-    + " possibly some technical details used in production of this picture");
+  const descriptionContent = document.createTextNode(imageObj.description);
   descriptionContainer.appendChild(descriptionContent);
   // construct card body
   cardBodyDiv.appendChild(authorDateContainer);

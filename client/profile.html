@@ -17,8 +17,9 @@
         <!-- Custom styles -->
         <link rel="stylesheet" href="style.css">
 
-        <!-- scripts -->
-        <script src="w3_include.js"> </script>
+        <!-- External scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
     </head>
 
@@ -116,24 +117,25 @@
 
         </main>
 
+        <!-- WHITE SPACE -->
+        <section class="text-center py-3 bg-white">
+            <div></div>
+        </section>
+
         <!-- FOOTER -->
         <footer w3-include-html="footer.html" class="footer mt-auto pb-3 text-bg-dark"></footer>
 
         <!-- SCRIPTS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="profile.js" type="module"> </script>
 
-        <!-- <script src="profile.js", type="module"></script> -->
         <script type="module">
-            import { initializeLogin, initializeLogOut, isLogged } from "./header.js"
-            import createProfilePage from "./profile.js"
+            import includeHTML from "./w3_include.js"
+            import initializeLogIn from "./login.js"
+            import initializeLogOut from "./logout.js"
+
             await includeHTML();
-            console.log("include stopped");
-            initializeLogin();
-            const userData = await isLogged();
-            console.log("user data in profile html", userData);
+            initializeLogIn();
             initializeLogOut();
-            createProfilePage(userData);
         </script>
 
     </body>

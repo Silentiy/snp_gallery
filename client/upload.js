@@ -1,8 +1,8 @@
-import { readLocalStorage } from "./header.js";
 import { baseUrl } from "./common.js";
 
-const token = readLocalStorage("API_TOKEN");
+const token = window.localStorage.getItem("API_TOKEN");
 console.log("upload.js");
+
 const imagePreviewArea = document.getElementById("image_preview_area");
 const sendButton = document.getElementById("photo-send");
 const fileInput = document.getElementById("input_file");
@@ -27,7 +27,7 @@ fileInput.onchange = () => {
 sendButton.addEventListener("click", cleanForm);
 
 async function uploadFile() {
-  console.log("uploadFile started");
+  console.log("uploadFile has started");
 
   const formdata = new FormData();
   const myHeaders = new Headers();
