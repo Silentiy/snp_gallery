@@ -1,4 +1,8 @@
-import { sendRequestToApi, baseUrl, logInErrorMessage } from "./common.js";
+import
+{
+  sendRequestToApi, requestUserData, baseUrl, logInErrorMessage, clearUrl,
+}
+  from "./common.js";
 import { createloggedInHeader } from "./header.js";
 
 export default async function initializeLogIn() {
@@ -8,13 +12,19 @@ export default async function initializeLogIn() {
 
   const apiToken = window.localStorage.getItem("API_TOKEN");
   const provider = window.localStorage.getItem("PROVIDER");
+  const state = new URLSearchParams(document.location.search).get("state");
 
-  if (apiToken) {
-    createloggedInHeader(apiToken);
+  if (state) {
+    window.localStorage.setItem("STATE", state);
   }
 
-  if (provider) {
-    socialLogin();
+  if (apiToken) {
+    const userData = await requestUserData(apiToken);
+    createloggedInHeader(userData);
+  }
+
+  if (provider && state) { // we have tried to Log In in this tab
+    socialLogin(); // let's continue what was started
     window.localStorage.removeItem("PROVIDER");
   }
 }
@@ -22,50 +32,73 @@ export default async function initializeLogIn() {
 function setLoginButtons() {
   const currentBaseUrl = window.location.href.split("?")[0];
 
+  const state = prepareStateParameter();
+
   const vkLoginButton = document.getElementById("vk-btn");
   const googleLoginButton = document.getElementById("google-btn");
 
-  const vkRequestCodeUrl = "https://oauth.vk.com/authorize?client_id=51536587&display=page&"
-      + `redirect_uri=${currentBaseUrl}&scope=4194304&response_type=code&v=5.131`;
+  const vkRequestCodeUrl = "https://oauth.vk.com/authorize?"
+  + "client_id=51536587&"
+  + `redirect_uri=${currentBaseUrl}&`
+  + "display=page&"
+  + "scope=4194304&"
+  + "response_type=code&"
+  + `state=${encodeURIComponent(state)}&`
+  + "v=5.207";
 
-  const googleRequestCodeUrl = "https://accounts.google.com/o/oauth2/auth?response_type=code&"
-      + "scope=https://www.googleapis.com/auth/userinfo.profile+"
-      + "https://www.googleapis.com/auth/userinfo.email&"
-      + "client_id=227202273006-afmkvi18g9tg4d0eksbhgrdo537bnu7l.apps.googleusercontent.com&"
-      + `redirect_uri=${currentBaseUrl}`;
+  const googleRequestCodeUrl = "https://accounts.google.com/o/oauth2/auth?"
+  + "response_type=code&"
+  + `state=${state}&`
+  + "scope=https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email&"
+  + "client_id=227202273006-afmkvi18g9tg4d0eksbhgrdo537bnu7l.apps.googleusercontent.com&"
+  + `redirect_uri=${currentBaseUrl}`;
 
   vkLoginButton.addEventListener("click", () => {
-    window.location.replace(vkRequestCodeUrl);
     window.localStorage.setItem("PROVIDER", "VK");
+    window.location.replace(encodeURI(vkRequestCodeUrl));
   });
 
   googleLoginButton.addEventListener("click", () => {
-    window.location.replace(googleRequestCodeUrl);
     window.localStorage.setItem("PROVIDER", "Google");
+    window.location.replace(googleRequestCodeUrl);
   });
+}
+
+function prepareStateParameter() {
+  const stateParameters = { log_in: "yes" };
+  const id = new URL(window.location.href).searchParams.get("id");
+  if (id) {
+    stateParameters.id = id;
+  }
+  return btoa(JSON.stringify(stateParameters));
 }
 
 async function socialLogin() {
   console.log("socialLogin has started");
+  const state = new URLSearchParams(document.location.search).get("state");
   const codeJson = retieveCode();
-  clearUrl();
-  if (!("error" in codeJson)) {
-    const tokenJson = await sendCode(codeJson);
-    if (!("error" in tokenJson)) {
-      const apiToken = tokenJson.key;
-      if (apiToken) {
-        window.localStorage.setItem("API_TOKEN", apiToken);
-        createloggedInHeader(apiToken);
-      } else {
-        console.log("Error in socialLogin: there was no value witn API_TOKEN in json-response", apiToken);
-        alert(logInErrorMessage);
-      }
+
+  clearUrl(["id"]);
+
+  if ("error" in codeJson && state !== null) { // we have tried to Log In
+    console.log("Error in socialLogin", codeJson);
+    alert(logInErrorMessage); // 'no code' situation is a problem
+  }
+
+  const tokenJson = await sendCode(codeJson);
+  console.log("tokenJson", tokenJson);
+  if (!("error" in tokenJson)) {
+    const apiToken = tokenJson.key;
+    if (apiToken) {
+      window.localStorage.setItem("API_TOKEN", apiToken);
+      const userData = await requestUserData(apiToken);
+      createloggedInHeader(userData);
     } else {
-      console.log("Error in socialLogin", tokenJson);
+      console.log("Error in socialLogin: there was no value witn API_TOKEN in json-response", apiToken);
       alert(logInErrorMessage);
     }
   } else {
-    console.log("Error in socialLogin", codeJson);
+    console.log("Error in socialLogin", tokenJson);
     alert(logInErrorMessage);
   }
 }
@@ -80,18 +113,11 @@ function retieveCode() {
   return { error: "No code was found to extract from URL" };
 }
 
-function clearUrl() {
-  const url = new URL(window.location.href);
-  url.searchParams.delete("code");
-  window.history.pushState(null, "", url.toString());
-  // window.history.replaceState(null, null, baseWindowUrl);
-}
-
 async function sendCode(code) {
   console.log("sendCode has started");
 
-  if (!(code)) {
-    return { error: "Code was not provided!" };
+  if (!(code || "error" in code)) {
+    return { error: "Code was not provided or is invalid!" };
   }
 
   const provider = window.localStorage.getItem("PROVIDER");
@@ -102,7 +128,8 @@ async function sendCode(code) {
   }
 
   const dataToSend = code;
-  const callbackUrl = window.location.href.split("?")[0];
+  const currentBaseUrl = window.location.href.split("?")[0];
+  const callbackUrl = currentBaseUrl;
   dataToSend.network = provider;
   dataToSend.callback_url = callbackUrl;
 
@@ -140,8 +167,8 @@ function determineCodeUrl(provider) {
 
 export function isLogged() {
   const apiToken = window.localStorage.getItem("API_TOKEN");
-  const logOutButton = document.getElementById("logout-btn");
-  if (apiToken && logOutButton) {
+  const userNameDiv = document.getElementById("username");
+  if (apiToken && userNameDiv.hasChildNodes()) {
     return true;
   }
   return false;

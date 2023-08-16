@@ -1,10 +1,8 @@
 import {
-  getUserPictureSrc, requestUserData, logInErrorMessage, getUserName,
+  getUserPictureSrc, logInErrorMessage, getUserName,
 } from "./common.js";
 
-export async function createloggedInHeader(apiToken) {
-  const userData = await requestUserData(apiToken);
-
+export async function createloggedInHeader(userData) {
   if (!("error" in userData)) {
     putUserDataIntoHeader(userData);
     toggleHeader();
@@ -15,11 +13,12 @@ export async function createloggedInHeader(apiToken) {
   }
 }
 
-function putUserDataIntoHeader(data) {
+export function putUserDataIntoHeader(data) {
   const userAvatar = document.getElementById("user-avatar");
   userAvatar.src = getUserPictureSrc(data).userPicture50Src;
 
   const userNameDiv = document.getElementById("username");
+  userNameDiv.innerHTML = "";
   const userName = document.createTextNode(getUserName(data));
   userNameDiv.appendChild(userName);
 }

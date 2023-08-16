@@ -2,7 +2,7 @@ import { sendRequestToApi, baseUrl } from "./common.js";
 import { createCardVoteButtons } from "./vote.js";
 
 const divPictures = document.getElementById("pictures");
-await createPageContent();
+createPageContent();
 
 async function createPageContent() {
   console.log("createPageContent");
@@ -60,7 +60,7 @@ function createCardTitile(imageObj) {
   titleLink.classList.add("link-dark", "pt-2");
   titleLink.href = detailedPageLink(imageObj);
   const titleTag = document.createElement("h5");
-  titleTag.classList.add("card-title", "text-center", "d-block", "text-truncate", "px-3", "mx-auto");
+  titleTag.classList.add("card-title", "text-center", "d-block", "text-truncate", "px-3", "py-1", "mx-auto");
   const titleText = document.createTextNode(imageObj.name);
 
   titleTag.appendChild(titleText);

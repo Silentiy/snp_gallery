@@ -119,21 +119,21 @@
         </main>
 
         <!-- WHITE SPACE -->
-        <section class="text-center py-3 bg-white">
+        <section class="mt-auto text-center py-3 bg-white">
             <div></div>
         </section>
 
         <!-- FOOTER -->
-        <footer w3-include-html="footer.html" class="footer mt-auto pb-3 text-bg-dark"></footer>
+        <footer w3-include-html="footer.html" class="footer pb-3 text-bg-dark"></footer>
 
         <!-- SCRIPTS -->
         <script src="comments.js" type="module"></script>
-        
+
         <script type="module">
             import includeHTML from "./w3_include.js"
             import initializeLogIn from "./login.js"
             import initializeLogOut from "./logout.js"
-            
+
             await includeHTML();
             initializeLogIn();
             initializeLogOut();

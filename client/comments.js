@@ -8,13 +8,42 @@ const divContent = document.getElementById("content");
 createPageContent();
 
 async function createPageContent() {
-  const picId = window.location.href.split("=")[1];
+  restoreIdFromStateParameter();
+
+  const picId = new URLSearchParams(window.location.search).get("id");
   const url = `${baseUrl}photos/${picId}`;
   const jsonData = await sendRequestToApi(url);
   console.log(jsonData);
   divContent.prepend(createPictureCard(jsonData));
   // divContent.appendChild(createLeaveCommentCard(apiResponse));
   // divContent.appendChild(createCommentsCards(apiResponse));
+}
+
+function restoreIdFromStateParameter() {
+  const searchParams = new URLSearchParams(document.location.search);
+  const id = searchParams.get("id");
+
+  if (id) {
+    return;
+  }
+
+  let state;
+  state = searchParams.get("state");
+  if (!state) {
+    state = window.localStorage.getItem("STATE");
+  }
+
+  if (state) {
+    const stateParameters = JSON.parse(atob(decodeURIComponent(state)));
+    if (stateParameters.id) {
+      const url = new URL(document.location.href);
+      url.searchParams.append("id", stateParameters.id);
+      window.history.pushState(null, "", url.toString());
+      // theoretically, we may end up in a situation where clearUrl()
+      // from login.js will have cleaned URL prior the ending of this function,
+      // but probability of such case seems to be neglectably low
+    }
+  }
 }
 
 function createPictureCard(imageObj) {

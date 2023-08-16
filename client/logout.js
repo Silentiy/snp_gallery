@@ -8,6 +8,8 @@ export default function initializeLogOut() {
 
 async function logOut() {
   console.log("on logOut");
+  deleteStateParameterFromUrl();
+  window.localStorage.removeItem("STATE");
   const apiToken = window.localStorage.getItem("API_TOKEN");
 
   const logOutResponse = await sendDeleteTokenRequest(apiToken);
@@ -18,6 +20,12 @@ async function logOut() {
     console.log("Error on logOut", logOutResponse);
     alert("We are sorry, but something went wrong during logOut. Please, try again later!");
   }
+}
+
+function deleteStateParameterFromUrl() {
+  const url = new URL(window.location.href);
+  url.searchParams.delete("state");
+  window.history.pushState(null, "", url.toString());
 }
 
 async function sendDeleteTokenRequest(apiToken) {
