@@ -57,8 +57,7 @@ async function updateProfilePage() {
 
 async function sendNickName() {
   const userData = await requestUserData(apiToken);
-  // const galleryUserDataUrl = `${baseUrl}user/${userData.pk}/`;
-  const galleryUserDataUrl = `${baseUrl}user/2/`;
+  const galleryUserDataUrl = `${baseUrl}user/${userData.pk}/`;
 
   const formdata = new FormData();
   const headers = new Headers();

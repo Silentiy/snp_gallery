@@ -6,7 +6,7 @@ createPageContent();
 
 async function createPageContent() {
   console.log("createPageContent");
-  const url = `${baseUrl}photos`;
+  const url = `${baseUrl}photos/`;
 
   const jsonData = await sendRequestToApi(url);
 
