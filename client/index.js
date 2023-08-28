@@ -108,7 +108,7 @@ function createCardBottomPart(imageObj) {
   const authorDateContainer = document.createElement("small");
   authorDateContainer.classList.add("card-text", "text-muted");
   const addedDate = imageObj.created_at.split("T")[0];
-  const authorDate = document.createTextNode(`Author: ${imageObj.username}, added: ${addedDate}`);
+  const authorDate = document.createTextNode(`Author: ${imageObj.user.username}, added: ${addedDate}`);
   authorDateContainer.appendChild(authorDate);
   // comments
   const commentsDiv = document.createElement("div");
@@ -116,7 +116,7 @@ function createCardBottomPart(imageObj) {
   const commentsLink = document.createElement("a");
   commentsLink.classList.add("text-muted");
   commentsLink.href = detailedPageLink(imageObj);
-  const commentsText = document.createTextNode("0 comments");
+  const commentsText = document.createTextNode(`${imageObj.comments} comments`);
   const commentsContainer = document.createElement("small");
   commentsContainer.appendChild(commentsText);
   commentsLink.appendChild(commentsContainer);
