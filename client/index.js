@@ -117,7 +117,7 @@ function createCardBottomPart(imageObj) {
   const commentsLink = document.createElement("a");
   commentsLink.classList.add("text-muted");
   commentsLink.href = detailedPageLink(imageObj);
-  const commentsText = document.createTextNode("0 comments");
+  const commentsText = document.createTextNode(`${imageObj.comments} comments`);
   const commentsContainer = document.createElement("small");
   commentsContainer.appendChild(commentsText);
   commentsLink.appendChild(commentsContainer);

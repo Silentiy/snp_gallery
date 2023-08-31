@@ -16,7 +16,7 @@ export function createCardVoteButtons(imageObj) {
 
   const plusSign = document.createTextNode("+");
   const minusSign = document.createTextNode("-");
-  const votesNumber = document.createTextNode(imageObj.likes);
+  const votesNumber = document.createTextNode(imageObj.votes);
 
   for (let i = 0; i < 2; i += 1) {
     const button = document.createElement("button");

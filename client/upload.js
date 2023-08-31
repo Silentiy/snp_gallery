@@ -52,7 +52,7 @@ async function uploadFile() {
   console.log("formdata.get('name')", formdata.get("name"), "formdata.get('description')", formdata.get("description"));
 
   try {
-    const response = await fetch(`${baseUrl}photos/`, requestOptions);
+    const response = await fetch(`${baseUrl}photo-post/`, requestOptions);
     const responseJson = await response.json();
     return responseJson;
   } catch (error) {
