@@ -11,8 +11,9 @@ async function createPageContent() {
   const jsonData = await sendRequestToApi(url);
 
   if (!("error" in jsonData)) {
-    if (jsonData.length > 0) {
-      jsonData.forEach((imageObj) => {
+    if (jsonData.result.length > 0) {
+      const results = jsonData.result;
+      results.forEach((imageObj) => {
         createCard(imageObj);
       });
     } else {
@@ -108,7 +109,7 @@ function createCardBottomPart(imageObj) {
   const authorDateContainer = document.createElement("small");
   authorDateContainer.classList.add("card-text", "text-muted");
   const addedDate = imageObj.created_at.split("T")[0];
-  const authorDate = document.createTextNode(`Author: ${imageObj.username}, added: ${addedDate}`);
+  const authorDate = document.createTextNode(`Author: ${imageObj.user.username}, added: ${addedDate}`);
   authorDateContainer.appendChild(authorDate);
   // comments
   const commentsDiv = document.createElement("div");
