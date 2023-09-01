@@ -68,7 +68,7 @@ function createPictureCard(imageObj) {
   const imageDiv = document.createElement("div");
   imageDiv.classList.add("img-detailed");
   const image = document.createElement("img");
-  image.src = imageObj.photo_200_100_url;
+  image.src = imageObj.photo_url;
   image.alt = imageObj.alt_description;
   image.classList.add("card-img-top", "img-fluid", "ps-3");
   imageDiv.appendChild(image);
