@@ -83,7 +83,7 @@ function createPictureCard(imageObj) {
   // author and date
   const authorDateContainer = document.createElement("small");
   authorDateContainer.classList.add("card-text", "text-muted", "ps-2");
-  const authorDateContent = document.createTextNode(`${imageObj.username} added ${imageObj.updated_at.split("T")[0]}`);
+  const authorDateContent = document.createTextNode(`${imageObj.user.username} added ${imageObj.created_at.split("T")[0]}`);
   authorDateContainer.appendChild(authorDateContent);
   // description title
   const descriptionTitleContainer = document.createElement("h6");
