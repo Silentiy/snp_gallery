@@ -14,8 +14,8 @@ export async function sendRequestToApi(requestUrl, requestOptions) {
   }
 }
 
-export async function requestUserData(apiToken) {
-  const userUrl = `${baseUrl}user/`;
+export async function requestUserData(apiToken, userId) {
+  const userUrl = `${baseUrl}user/${userId}/`;
   const options = {
     method: "GET",
     headers: {

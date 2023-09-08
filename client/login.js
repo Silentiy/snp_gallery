@@ -11,6 +11,7 @@ export default async function initializeLogIn() {
   setLoginButtons();
 
   const apiToken = window.localStorage.getItem("API_TOKEN");
+  const userId = window.localStorage.getItem("USER_ID");
   const provider = window.localStorage.getItem("PROVIDER");
   const state = new URLSearchParams(document.location.search).get("state");
 
@@ -19,7 +20,7 @@ export default async function initializeLogIn() {
   }
 
   if (apiToken) {
-    const userData = await requestUserData(apiToken);
+    const userData = await requestUserData(apiToken, userId);
     createloggedInHeader(userData);
   }
 
@@ -91,7 +92,8 @@ async function socialLogin() {
     const apiToken = tokenJson.key;
     if (apiToken) {
       window.localStorage.setItem("API_TOKEN", apiToken);
-      const userData = await requestUserData(apiToken);
+      window.localStorage.setItem("USER_ID", tokenJson.user_id);
+      const userData = await requestUserData(apiToken, tokenJson.user_id);
       createloggedInHeader(userData);
     } else {
       console.log("Error in socialLogin: there was no value witn API_TOKEN in json-response", apiToken);

@@ -11,6 +11,8 @@ sendNickNameButton.addEventListener("click", sendNickName);
 
 const apiToken = window.localStorage.getItem("API_TOKEN");
 
+const userId = window.localStorage.getItem("USER_ID");
+
 populateProfilePage();
 
 async function populateProfilePage() {
@@ -18,7 +20,7 @@ async function populateProfilePage() {
     alert("You have to be Logged In to see the data on this page!");
     return;
   }
-  const userData = await requestUserData(apiToken);
+  const userData = await requestUserData(apiToken, userId);
   if (!("error" in userData)) {
     appendGreeting(userData);
 
@@ -48,7 +50,7 @@ function appendGreeting(userData) {
 }
 
 async function updateProfilePage() {
-  const userData = await requestUserData(apiToken);
+  const userData = await requestUserData(apiToken, userId);
   if (!("error" in userData)) {
     putUserDataIntoHeader(userData);
     appendGreeting(userData);
@@ -56,7 +58,7 @@ async function updateProfilePage() {
 }
 
 async function sendNickName() {
-  const userData = await requestUserData(apiToken);
+  const userData = await requestUserData(apiToken, userId);
   const galleryUserDataUrl = `${baseUrl}user/${userData.pk}/`;
 
   const formdata = new FormData();
